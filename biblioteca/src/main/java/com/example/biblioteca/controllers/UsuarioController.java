@@ -43,5 +43,4 @@ public class UsuarioController {
         return usuarioService.autenticarUsuario(email, password);
     }*/
 
-
 }

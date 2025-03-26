@@ -87,4 +87,8 @@ export class PrestamosComponent implements OnInit {
   volverAlInicio(): void {
     this.router.navigate(['/']);
   }
+
+  exportarExcel(): void {
+    this.prestamoService.descargarExcel();
+  }
 }

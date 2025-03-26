@@ -26,4 +26,13 @@ export class PrestamoService {
   devolverPrestamo(prestamoId: number): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/devolver/${prestamoId}`, {});
   }
+
+  descargarExcel(): void {
+    this.http.get(`${this.apiUrl}/exportExcel`, { responseType: 'blob' }).subscribe(blob => {
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = 'prestamos.xlsx';
+      link.click();
+    });
+  }
 }

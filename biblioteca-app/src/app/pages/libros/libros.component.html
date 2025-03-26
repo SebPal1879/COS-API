@@ -1,0 +1,63 @@
+<div class="contenedor">
+  <h2>📚 Gestión de Libros</h2>
+  <button mat-raised-button color="primary" class="boton-agregar" (click)="abrirFormulario()">
+    Agregar Libro
+  </button>
+
+  <table mat-table [dataSource]="libros" class="tabla-libros mat-elevation-z8">
+    <!-- Título -->
+    <ng-container matColumnDef="titulo">
+      <th mat-header-cell *matHeaderCellDef> Título </th>
+      <td mat-cell *matCellDef="let libro"> {{ libro.titulo }} </td>
+    </ng-container>
+
+    <!-- Autor -->
+    <ng-container matColumnDef="autor">
+      <th mat-header-cell *matHeaderCellDef> Autor </th>
+      <td mat-cell *matCellDef="let libro"> {{ libro.autor }} </td>
+    </ng-container>
+
+    <!-- Género -->
+    <ng-container matColumnDef="genero">
+      <th mat-header-cell *matHeaderCellDef> Género </th>
+      <td mat-cell *matCellDef="let libro"> {{ libro.genero }} </td>
+    </ng-container>
+
+    <!-- Unidades -->
+    <ng-container matColumnDef="unidades">
+      <th mat-header-cell *matHeaderCellDef> Unidades </th>
+      <td mat-cell *matCellDef="let libro"> {{ libro.unidades }} </td>
+    </ng-container>
+
+    <!-- Estado -->
+    <ng-container matColumnDef="estado">
+      <th mat-header-cell *matHeaderCellDef> Estado </th>
+      <td mat-cell *matCellDef="let libro">
+        <span class="estado-activo" *ngIf="libro.estado === 'ACTIVO'">🟢 ACTIVO</span>
+        <span class="estado-inactivo" *ngIf="libro.estado !== 'ACTIVO'">🔴 INACTIVO</span>
+      </td>
+    </ng-container>
+
+    <!-- Acciones -->
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <td mat-cell *matCellDef="let libro">
+        <button mat-icon-button color="primary" (click)="abrirFormulario(libro)" matTooltip="Editar">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="eliminarLibro(libro)" matTooltip="Eliminar">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+
+<div class="contenedor">
+  <button mat-raised-button color="accent" class="boton-volver" (click)="volverAlInicio()">
+    <mat-icon>arrow_back</mat-icon> Volver al Inicio
+  </button>
+</div>

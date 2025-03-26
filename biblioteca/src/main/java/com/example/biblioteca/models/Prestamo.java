@@ -15,7 +15,7 @@ import java.time.LocalDate;
 public class Prestamo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idPrestamo;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "libro_id", nullable = false)

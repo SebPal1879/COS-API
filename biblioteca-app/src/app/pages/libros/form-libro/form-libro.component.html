@@ -1,0 +1,43 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Editar Libro' : 'Agregar Libro' }}</h2>
+
+<form [formGroup]="libroForm" (ngSubmit)="guardarLibro()" class="libro-form">
+  <mat-form-field appearance="outline">
+    <mat-label>Título</mat-label>
+    <input matInput formControlName="titulo" required />
+    <mat-error *ngIf="libroForm.get('titulo')?.invalid">El título es obligatorio</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Autor</mat-label>
+    <input matInput formControlName="autor" required />
+    <mat-error *ngIf="libroForm.get('autor')?.invalid">El autor es obligatorio</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Género</mat-label>
+    <input matInput formControlName="genero" required />
+    <mat-error *ngIf="libroForm.get('genero')?.invalid">El género es obligatorio</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Unidades</mat-label>
+    <input matInput type="number" formControlName="unidades" required />
+    <mat-error *ngIf="libroForm.get('unidades')?.invalid">Debe ser mayor a 0</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Estado</mat-label>
+    <mat-select formControlName="estado">
+      <mat-option value="ACTIVO">Activo</mat-option>
+      <mat-option value="SIN UNIDADES">Sin Unidades</mat-option>
+      <mat-option value="ELIMINADO">Eliminado</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="actions">
+    <button mat-raised-button (click)="dialogRef.close()">Cancelar</button>
+    <button mat-raised-button type="submit" [disabled]="libroForm.invalid">
+      {{ isEdit ? 'Actualizar' : 'Guardar' }}
+    </button>
+  </div>
+</form>

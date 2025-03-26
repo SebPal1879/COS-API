@@ -10,5 +10,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     Optional<Usuario> findByCedula(String cedula);
     List<Usuario> findByEstado(String estado);
 
-   // Usuario findByEmailandPassword(String email, String password);
+    Usuario findByEmail(String email);
+
 }

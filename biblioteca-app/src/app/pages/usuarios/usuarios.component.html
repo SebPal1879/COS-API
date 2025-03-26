@@ -1,0 +1,71 @@
+<div class="contenedor">
+  <h2 class="titulo">
+    <mat-icon>group</mat-icon> Gestión de Usuarios
+  </h2>
+
+  <button mat-raised-button color="primary" (click)="abrirFormulario()">
+    <mat-icon>person_add</mat-icon> Agregar Usuario
+  </button>
+</div>
+
+<!-- Contenedor de la tabla -->
+<div class="contenedor">
+  <table mat-table [dataSource]="usuarios" class="tabla-usuarios mat-elevation-z8">
+
+    <!-- Nombre -->
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef> Nombre </th>
+      <td mat-cell *matCellDef="let usuario"> {{ usuario.nombre }} </td>
+    </ng-container>
+
+    <!-- Cédula -->
+    <ng-container matColumnDef="cedula">
+      <th mat-header-cell *matHeaderCellDef> Cédula </th>
+      <td mat-cell *matCellDef="let usuario"> {{ usuario.cedula }} </td>
+    </ng-container>
+
+    <!-- Dirección -->
+    <ng-container matColumnDef="direccion">
+      <th mat-header-cell *matHeaderCellDef> Dirección </th>
+      <td mat-cell *matCellDef="let usuario"> {{ usuario.direccion }} </td>
+    </ng-container>
+
+    <!-- Email -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let usuario"> {{ usuario.email }} </td>
+    </ng-container>
+
+    <!-- Estado (sin fondo, solo color de texto) -->
+    <ng-container matColumnDef="estado">
+      <th mat-header-cell *matHeaderCellDef> Estado </th>
+      <td mat-cell *matCellDef="let libro">
+        <span class="estado-activo" *ngIf="libro.estado === 'ACTIVO'">🟢 ACTIVO</span>
+        <span class="estado-inactivo" *ngIf="libro.estado !== 'ACTIVO'">🔴 ELIMINADO</span>
+      </td>
+    </ng-container>
+
+    <!-- Acciones (Botones alineados horizontalmente) -->
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <td mat-cell *matCellDef="let usuario">
+        <button mat-icon-button color="primary" (click)="abrirFormulario(usuario)" matTooltip="Editar">
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <button mat-icon-button color="warn" (click)="eliminarUsuario(usuario)" matTooltip="Eliminar">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+
+<div class="contenedor">
+  <button mat-raised-button color="accent" class="boton-volver" (click)="volverAlInicio()">
+    <mat-icon>arrow_back</mat-icon> Volver al Inicio
+  </button>
+</div>

@@ -1,0 +1,53 @@
+<h2 mat-dialog-title class="dialog-title">
+  <mat-icon>person_add</mat-icon> 
+  {{ isEdit ? 'Editar Usuario' : 'Agregar Usuario' }}
+</h2>
+
+<form [formGroup]="usuarioForm" (ngSubmit)="guardarUsuario()" class="form-container">
+
+  <div class="form-grid">
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="nombre" required />
+      <mat-error *ngIf="usuarioForm.get('nombre')?.invalid">El nombre es obligatorio</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Cédula</mat-label>
+      <input matInput formControlName="cedula" required minlength="8" />
+      <mat-error *ngIf="usuarioForm.get('cedula')?.invalid">Debe ser un número válido</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Dirección</mat-label>
+      <input matInput formControlName="direccion" required />
+      <mat-error *ngIf="usuarioForm.get('direccion')?.invalid">La dirección es obligatoria</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" required type="email" />
+      <mat-error *ngIf="usuarioForm.get('email')?.invalid">Debe ser un email válido</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Estado</mat-label>
+      <mat-select formControlName="estado">
+        <mat-option value="ACTIVO">Activo</mat-option>
+        <mat-option value="ELIMINADO">Eliminado</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="actions">
+    <button mat-raised-button class="btn-cancelar" (click)="cancelar()">
+      Cancelar
+    </button>
+    <button mat-raised-button
+      [ngClass]="{ 'btn-guardar-disabled': usuarioForm.invalid, 'btn-guardar-active': !usuarioForm.invalid }"
+      type="submit" [disabled]="usuarioForm.invalid">
+      Guardar
+    </button>
+  </div>
+
+</form>

@@ -65,6 +65,7 @@ public class LibroService {
                     .body(new MensajeResponse("Libro no encontrado"));
         }
     }
+
     public ResponseEntity<?> obtenerPorTitulo(String titulo) {
         List<Libro> libros = libroRepository.findByTituloContainingIgnoreCaseAndEstado(titulo, "ACTIVO");
         if (libros.isEmpty()) {

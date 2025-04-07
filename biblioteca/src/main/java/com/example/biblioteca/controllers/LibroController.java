@@ -3,6 +3,7 @@ package com.example.biblioteca.controllers;
 import com.example.biblioteca.dto.MensajeResponse;
 import com.example.biblioteca.models.Libro;
 import com.example.biblioteca.services.LibroService;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

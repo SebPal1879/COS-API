@@ -1,0 +1,76 @@
+type Query {
+    usuariosActivos: [Usuario]
+    listarLibros: [Libro]
+    librosDisponibles: [Libro]
+    librosPrestados: [Libro]
+    libroPorId(id: ID!): Libro
+    librosPorTitulo(titulo: String!): [Libro]
+    obtenerTodosLosPrestamos: [Prestamo]
+    prestamosActivos: [Prestamo]
+}
+
+type Mutation {
+    registrarUsuario(UsuarioInput: UsuarioInput!): MensajeResponse
+    actualizarUsuario(id: ID!, UsuarioInput: UsuarioInput!): MensajeResponse
+    eliminarUsuario(id: ID!): MensajeResponse
+    agregarLibro(LibroInput: LibroInput!): String
+    actualizarLibro(id: ID!, LibroInput: LibroInput!): String
+    eliminarLibro(id: ID!): String
+    registrarPrestamo(libroId: ID!, usuarioId: ID!): MensajeResponse
+    devolverPrestamo(prestamoId: ID!): MensajeResponse
+}
+
+type Usuario{
+    id: ID
+    nombre: String
+    email: String
+    direccion: String
+    cedula: String
+    estado: String
+}
+
+type Libro{
+    id: ID
+    titulo: String
+    autor: String
+    genero: String
+    unidades: Int!
+    estado: String!
+}
+
+type Prestamo {
+    id: ID
+    libro: Libro
+    usuario: Usuario
+    fechaPrestamo: String
+    fechaDevolucion: String
+    estado: String!
+}
+
+input UsuarioInput {
+    nombre: String
+    email: String
+    direccion: String
+    cedula: String
+    estado: String
+}
+
+input LibroInput{
+    titulo: String
+    autor: String
+    genero: String
+    unidades: Int!
+    estado: String!
+}
+
+type PrestamoInput {
+    fechaPrestamo: String
+    fechaDevolucion: String
+    estado: String!
+    libroId: String!
+    usuarioId: String!
+}
+
+type MensajeResponse {
+    mensaje: String
+}

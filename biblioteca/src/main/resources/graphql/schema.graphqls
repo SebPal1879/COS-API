@@ -74,3 +74,9 @@ type PrestamoInput {
 type MensajeResponse {
     mensaje: String
 }
+
+type Subscription {
+    usuarioRegistrado: Usuario
+    usuarioActualizado: Usuario
+    usuarioEliminado: Usuario
+}

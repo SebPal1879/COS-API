@@ -11,6 +11,7 @@ Este proyecto es un sistema de gestión de biblioteca desarrollado con **Spring 
 - **PostgreSQL** (Base de datos relacional)
 - **JUnit** (Pruebas unitarias)
 - Java 17
+- GraphQL
 
 ### Frontend:
 
@@ -38,6 +39,7 @@ Este proyecto es un sistema de gestión de biblioteca desarrollado con **Spring 
 - **Indicadores de Préstamos**: Resumen de préstamos activos y finalizados.
 - **Exportar información a excel**: Exportar a excel Resumen de préstamos activos y finalizados.
 - **Interfaz Amigable**: Diseño atractivo y responsive con Angular Material.
+- **GraphQL**: Para optimizar las consultas a BD.
 
 ## 🛠️ Instalación y Configuración
 

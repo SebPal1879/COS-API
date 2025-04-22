@@ -19,8 +19,12 @@
     "@angular/platform-browser": "^19.2.0",
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
+    "@apollo/client": "^3.13.6",
+    "apollo-angular": "^10.0.3",
     "bootstrap": "^5.3.3",
+    "graphql": "^16.10.0",
     "rxjs": "~7.8.0",
+    "subscriptions-transport-ws": "^0.11.0",
     "sweetalert2": "^11.6.13",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

@@ -9,6 +9,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { UsuarioService } from '../../../services/usuario.service';
 import { Usuario } from '../../../models/usuario';
+import { UsuarioGraphQLService } from '../../../services/usuario-graphql.service';
+
 @Component({
   selector: 'app-form-usuario',
   imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule,MatSelectModule, MatIconModule, MatButtonModule],
@@ -21,7 +23,7 @@ export class FormUsuarioComponent implements OnInit{
 
   constructor(
     private fb: FormBuilder,
-    private usuarioService: UsuarioService,
+    private usuarioService: UsuarioGraphQLService,
     public dialogRef: MatDialogRef<FormUsuarioComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { usuario: Usuario }
   ) {}
@@ -48,7 +50,7 @@ export class FormUsuarioComponent implements OnInit{
         this.dialogRef.close(true);
       });
     } else {
-      this.usuarioService.agregarUsuario(usuario).subscribe(() => {
+      this.usuarioService.registrarUsuario(usuario).subscribe(() => {
         this.dialogRef.close(true);
       });
     }

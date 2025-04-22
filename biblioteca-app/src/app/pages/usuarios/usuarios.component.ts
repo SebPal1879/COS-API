@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UsuarioService } from '../../services/usuario.service';
+//import { UsuarioService } from '../../services/usuario.service';
+import { UsuarioGraphQLService } from '../../services/usuario-graphql.service';
 import { Usuario } from '../../models/usuario';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
@@ -23,10 +24,49 @@ export class UsuariosComponent implements OnInit {
   displayedColumns: string[] = ['nombre', 'cedula', 'direccion', 'email', 'estado', 'acciones'];
   usuarios = new MatTableDataSource<Usuario>([]);
 
-  constructor(private usuarioService: UsuarioService, private dialog: MatDialog, private router: Router) {}
+  constructor(private usuarioService: UsuarioGraphQLService, private dialog: MatDialog, private router: Router) {}
 
   ngOnInit(): void {
     this.cargarUsuarios();
+
+    this.usuarioService.suscribirseAUsuarios().subscribe({
+      next: (data) => {
+        const nuevo = data.data?.usuarioRegistrado;
+        if (!nuevo) return;
+
+        this.usuarios.data = [...this.usuarios.data, nuevo];
+        console.log('🆕 Usuario registrado (por suscripción):', nuevo);
+      },
+      error: (err) => {
+        console.error('Error en la suscripción:', err);
+      }
+    });
+
+    this.usuarioService.suscribirseAUsuarioActualizado().subscribe({
+      next: (data) => {
+        const actualizado = data.data?.usuarioActualizado;
+        if (!actualizado) return;
+
+        const index = this.usuarios.data.findIndex(u => u.id === actualizado.id);
+        if (index !== -1) {
+          this.usuarios.data[index] = actualizado;
+          this.usuarios._updateChangeSubscription();
+          console.log('♻️ Usuario actualizado (por suscripción):', actualizado);
+        }
+      },
+      error: (err) => console.error('Error en suscripción actualizar:', err),
+    });
+
+    this.usuarioService.suscribirseAUsuarioEliminado().subscribe({
+      next: (data) => {
+        const eliminadoId = data.data?.usuarioEliminado?.id;
+        if (!eliminadoId) return;
+
+        this.usuarios.data = this.usuarios.data.filter(u => u.id !== eliminadoId);
+        console.log('❌ Usuario eliminado (por suscripción):', eliminadoId);
+      },
+      error: (err) => console.error('Error en suscripción eliminar:', err),
+    });
   }
 
   cargarUsuarios(): void {
@@ -72,3 +112,4 @@ export class UsuariosComponent implements OnInit {
     this.router.navigate(['/']);
   }
 }
+

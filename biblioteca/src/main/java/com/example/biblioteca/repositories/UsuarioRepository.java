@@ -7,8 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
-    Optional<Usuario> findByCedula(String cedula);
+    public Usuario findByUsername(String username);
     List<Usuario> findByEstado(String estado);
+
 
 
 }

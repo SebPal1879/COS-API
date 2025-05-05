@@ -1,4 +1,8 @@
-import { ApplicationConfig, provideZoneChangeDetection, inject } from '@angular/core';
+import {
+  ApplicationConfig,
+  provideZoneChangeDetection,
+  inject,
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -10,12 +14,15 @@ import { getMainDefinition } from '@apollo/client/utilities';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { Operation } from '@apollo/client';
 import { split } from '@apollo/client/core';
+import { authInterceptor } from './services/auth.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideHttpClient(withInterceptors([authInterceptor])),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(withInterceptors([])), provideHttpClient(),
+    provideHttpClient(),
     provideApollo(() => {
       const httpLink = inject(HttpLink).create({
         uri: 'http://localhost:8080/graphql',
@@ -44,7 +51,7 @@ export const appConfig: ApplicationConfig = {
         link,
         cache: new InMemoryCache(),
       };
-    })
+    }),
     /*provideApollo(() => {
       const httpLink = inject(HttpLink);
 
@@ -55,5 +62,5 @@ export const appConfig: ApplicationConfig = {
         cache: new InMemoryCache(),
       };
     })*/
-  ]
+  ],
 };

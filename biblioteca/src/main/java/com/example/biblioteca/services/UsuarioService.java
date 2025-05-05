@@ -17,6 +17,8 @@ public class UsuarioService {
     UsuarioRepository usuarioRepository;
 
 
+
+
     public ResponseEntity<List<Usuario>> obtenerUsuariosActivos () {
         List<Usuario> usuariosActivos=usuarioRepository.findByEstado("ACTIVO");
         return  ResponseEntity.ok(usuariosActivos);

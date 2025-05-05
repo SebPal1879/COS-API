@@ -49,9 +49,9 @@ export class LoginComponent implements OnInit {
           this.loginService.setUser(user);
 
           if (this.loginService.getUserRole() == 'ADMIN') {
-            window.location.href = '/prestamos';
+            window.location.href = '/';
           } else if (this.loginService.getUserRole() == 'NORMAL') {
-            window.location.href = '/ne';
+            window.location.href = '/login';
           } else {
             this.loginService.logout();
           }

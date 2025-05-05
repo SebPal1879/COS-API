@@ -1,9 +1,11 @@
 package com.example.biblioteca.controllers;
 
 import com.example.biblioteca.configuraciones.JwtUtils;
+import com.example.biblioteca.models.Authority;
 import com.example.biblioteca.models.JwtRequest;
 import com.example.biblioteca.models.JwtResponse;
 import com.example.biblioteca.models.Usuario;
+import com.example.biblioteca.repositories.UsuarioRepository;
 import com.example.biblioteca.services.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +18,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class AuthenticationController {
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -46,9 +52,15 @@ public class AuthenticationController {
     }
 
     private void autenticar(String username, String password) throws Exception{
-        System.out.println("username " + username + " password " + password);
+        Usuario usuarioLocal = usuarioRepository.findByUsername(username);
+
         try {
+
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username,password));
+            if(!usuarioLocal.getAuthorities().stream()
+                    .anyMatch(authority -> authority.getAuthority().equals("ADMIN"))){
+                throw new Exception("El usuario no es administrador");
+            }
         }catch (DisabledException disabledException){
             throw new Exception("USUARIO DESHABILITADO " + disabledException.getMessage());
         } catch (BadCredentialsException badCredentialsException){

@@ -45,7 +45,6 @@ export class LoginComponent implements OnInit {
       (data: any) => {
         this.loginService.loginUser(data.token);
         this.loginService.getCurrentUser().subscribe((user: any) => {
-          console.log(user + 'dfqweer');
           this.loginService.setUser(user);
 
           if (this.loginService.getUserRole() == 'ADMIN') {
